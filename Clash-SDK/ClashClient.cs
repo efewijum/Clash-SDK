@@ -111,6 +111,7 @@ namespace Clash.SDK
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _httpClient.SendAsync(new HttpRequestMessage
             {
+                Method = new HttpMethod("PATCH"),
                 RequestUri = new Uri(url),
                 Content = httpContent
             });
@@ -161,7 +162,8 @@ namespace Clash.SDK
         /// </summary>
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _httpClient.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

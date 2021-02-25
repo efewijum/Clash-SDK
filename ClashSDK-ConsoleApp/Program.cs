@@ -1,6 +1,7 @@
 ﻿using Clash.SDK;
 using Clash.SDK.Models.Events;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ClashSDK.ConsoleApp
@@ -41,12 +42,18 @@ namespace ClashSDK.ConsoleApp
             Console.WriteLine("------------------Clash WebSocket------------------");
             clashClient.GetClashConnection();
             clashClient.ConnectionUpdatedEvt += OnConnectionUpdated;
-            clashClient.ConnectionUpdatedEvt -= OnConnectionUpdated;
-            */
+            //clashClient.ConnectionUpdatedEvt -= OnConnectionUpdated;
             // 测试延迟
             Console.WriteLine("------------------Clash Latency------------------");
             var result = await clashClient.GetClashProxyDelay("DIRECT");
             Console.WriteLine(result.Delay);
+            */
+            // 测试更改配置
+            Console.WriteLine("------------------Clash Config------------------");
+            var dict = new Dictionary<string, string>();
+            dict.Add("mode", "direct");
+            await clashClient.ChangeClashConfigs(dict);
+            Console.WriteLine("Done");
         }
 
         public static void OnConnectionUpdated(object sender, ConnectionEvtArgs e)
