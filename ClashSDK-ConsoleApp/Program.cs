@@ -1,4 +1,6 @@
 ﻿using Clash.SDK;
+using Clash.SDK.Extensions;
+using Clash.SDK.Models.Enums;
 using Clash.SDK.Models.Events;
 using System;
 using System.Collections.Generic;

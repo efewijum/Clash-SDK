@@ -7,14 +7,23 @@ namespace Clash.SDK.Models.Enums
 {
     public enum ProxyType
     {
+        [EnumMember(Value = "Selector")]
+        Selector,
+
+        [EnumMember(Value = "URLTest")]
+        URLTest,
+
+        [EnumMember(Value = "LoadBalance")]
+        LoadBalance,
+
+        [EnumMember(Value = "Fallback")]
+        FallBack,
+
         [EnumMember(Value = "Direct")]
         Direct,
 
         [EnumMember(Value = "Reject")]
         Reject,
-
-        [EnumMember(Value = "Selector")]
-        Selector,
 
         [EnumMember(Value = "Socks5")]
         Socks5,
@@ -35,9 +44,6 @@ namespace Clash.SDK.Models.Enums
         Trojan,
 
         [EnumMember(Value = "Snell")]
-        Snell,
-
-        [EnumMember(Value = "URLTest")]
-        URLTest
+        Snell
     }
 }
