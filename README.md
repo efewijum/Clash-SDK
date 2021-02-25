@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://i.loli.net/2021/01/17/aK4wpbnsmudcJLo.png" align="center" height="80"/>
+    <img src="https://i.loli.net/2021/02/25/SdtJ295biqulCkf.png" align="center" height="80"/>
 </p>
 
 <div align="center">
@@ -10,6 +10,8 @@
 
 该SDK基于[Clash API](https://clash.gitbook.io/doc/restful-api)实现，在.NET Standard 2.0上构建
 
+</div>
+
 ## 简单的开始
 
 使用前，你需要先安装 **CoelWu.Clash.SDK** nuget包
@@ -19,7 +21,7 @@
 ClashClient _client = new ClashClient();
 
 // 获取Clash版本
-var autoComNumResponse = await _client.GetClashVersion();
+var clashVersionResponse = await _client.GetClashVersion();
 
 // 断开所有链接
 await _client.DisconnectAllConnections();
