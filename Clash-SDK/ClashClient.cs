@@ -1,0 +1,167 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Clash.SDK
+{
+    public sealed partial class ClashClient : IDisposable
+    {
+        private static string _baseUrl = string.Empty;
+        private static string _baseWsUrl = string.Empty;
+        private static string _secret = string.Empty;
+        internal HttpClient _httpClient;
+
+        /// <summary>
+        /// 初始化ClashClient实例
+        /// </summary>
+        public ClashClient()
+        {
+            _baseUrl = "http://127.0.0.1:8080";
+            _baseWsUrl = "ws://127.0.0.1:8080";
+            _httpClient = new HttpClient();
+            _httpClient.Timeout = TimeSpan.FromSeconds(3);
+        }
+
+        /// <summary>
+        /// 初始化ClashClient实例
+        /// </summary>
+        /// <param name="port">控制器端口</param>
+        public ClashClient(int port)
+        {
+            _baseUrl = $"http://127.0.0.1:{port}";
+            _baseWsUrl = $"ws://127.0.0.1:{port}";
+            _httpClient = new HttpClient();
+            _httpClient.Timeout = TimeSpan.FromSeconds(3);
+        }
+
+        /// <summary>
+        /// 初始化ClashClient实例
+        /// </summary>
+        /// <param name="http">控制器Http地址</param>
+        /// <param name="ws">控制器Websocket地址</param>
+        public ClashClient(string http, string ws)
+        {
+            _baseUrl = http;
+            _baseWsUrl = ws;
+            _httpClient = new HttpClient();
+            _httpClient.Timeout = TimeSpan.FromSeconds(3);
+        }
+
+        /// <summary>
+        /// 设置控制器Secret
+        /// </summary>
+        /// <param name="secret"></param>
+        public void SetSecret(string secret)
+        {
+            if (_httpClient != null && !string.IsNullOrWhiteSpace(secret))
+            {
+                _secret = secret;
+                _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {secret}");
+            }
+        }
+
+        public string GetSecret()
+        {
+            return _secret;
+        }
+
+        /// <summary>
+        /// 发送GET请求
+        /// </summary>
+        /// <typeparam name="T">需要转换的目标对象类型</typeparam>
+        /// <param name="url">请求地址</param>
+        /// <param name="parameters">请求参数</param>
+        /// <returns></returns>
+        internal async Task<T> GetAsync<T>(string url, Dictionary<string, string> parameters = null)
+        {
+            string query = "";
+            if (parameters != null && parameters.Count > 0)
+            {
+                query = "?" + string.Join("&", parameters.Select(p => p.Key + "=" + Uri.EscapeUriString(p.Value)));
+                url += query;
+            }
+            var response = await _httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            string result = await response.Content.ReadAsStringAsync();
+            if (typeof(T) == typeof(String))
+            {
+                return (T)(object)result;
+            }
+            else
+            {
+                return JsonConvert.DeserializeObject<T>(result);
+            }
+        }
+
+        /// <summary>
+        /// 发送PATCH请求
+        /// </summary>
+        /// <typeparam name="T">需要转换的目标对象类型</typeparam>
+        /// <param name="url">请求地址</param>
+        /// <param name="patchData">需要PATCH提交的数据</param>
+        /// <returns></returns>
+        internal async Task<T> PatchAsync<T>(string url, object patchData = null)
+        {
+            string json = JsonConvert.SerializeObject(patchData);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.SendAsync(new HttpRequestMessage
+            {
+                RequestUri = new Uri(url),
+                Content = httpContent
+            });
+            string result = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(result);
+        }
+
+        /// <summary>
+        /// 发送PUT请求
+        /// </summary>
+        /// <typeparam name="T">需要转换的目标对象类型</typeparam>
+        /// <param name="url">请求地址</param>
+        /// <param name="parameters">请求参数</param>
+        /// <param name="putData">需要PUT提交的数据</param>
+        /// <returns></returns>
+        internal async Task<T> PutAsync<T>(string url, Dictionary<string, string> parameters = null, object putData = null)
+        {
+            string query = "";
+            if (parameters != null && parameters.Count > 0)
+            {
+                query = "?" + string.Join("&", parameters.Select(p => p.Key + "=" + Uri.EscapeUriString(p.Value)));
+                url += query;
+            }
+            string json = JsonConvert.SerializeObject(putData);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync(url, httpContent);
+            response.EnsureSuccessStatusCode();
+            string result = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(result);
+        }
+
+        /// <summary>
+        /// 发送DELETE请求
+        /// </summary>
+        /// <typeparam name="T">需要转换的目标对象类型</typeparam>
+        /// <param name="url">请求地址</param>
+        /// <returns></returns>
+        internal async Task<T> DeleteAsync<T>(string url)
+        {
+            var response = await _httpClient.DeleteAsync(url);
+            response.EnsureSuccessStatusCode();
+            string result = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(result);
+        }
+
+        /// <summary>
+        /// 释放ClashClient实例
+        /// </summary>
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
