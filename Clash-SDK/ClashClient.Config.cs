@@ -46,7 +46,7 @@ namespace Clash.SDK
 
             var obj = new
             {
-                path = Uri.EscapeUriString(path),
+                path = path,
             };
 
             _ = await PutAsync<ClashNullResponse>(API_CONFIGS, dict, string.IsNullOrWhiteSpace(path) ? null : obj);

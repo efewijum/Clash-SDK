@@ -10,7 +10,7 @@ namespace ClashSDK.ConsoleApp
 {
     class Program
     {
-        static ClashClient clashClient = new ClashClient(26926);
+        static ClashClient clashClient = new ClashClient(9090);
 
         static void Main(string[] args)
         {
@@ -49,13 +49,21 @@ namespace ClashSDK.ConsoleApp
             Console.WriteLine("------------------Clash Latency------------------");
             var result = await clashClient.GetClashProxyDelay("DIRECT");
             Console.WriteLine(result.Delay);
-            */
             // 测试更改配置
             Console.WriteLine("------------------Clash Config------------------");
             var dict = new Dictionary<string, string>();
             dict.Add("mode", "direct");
             await clashClient.ChangeClashConfigs(dict);
             Console.WriteLine("Done");
+            // 测试更改代理
+            Console.WriteLine("------------------Clash Change Proxy------------------");
+            await clashClient.SwitchClashProxy("GLOBAL", "PROXY");
+            Console.WriteLine("Done");
+            // 测试更改代理
+            Console.WriteLine("------------------Clash Reload Config------------------");
+            await clashClient.ReloadClashConfig(false, "C:\\Users\\Coel Wu\\.config\\clash\\profiles\\1614360331723.yml");
+            Console.WriteLine("Done");
+            */
         }
 
         public static void OnConnectionUpdated(object sender, ConnectionEvtArgs e)

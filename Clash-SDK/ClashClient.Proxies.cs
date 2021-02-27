@@ -48,13 +48,13 @@ namespace Clash.SDK
             return result;
         }
 
-        public async Task SwitchClashProxy(string originProxy, string targetProxy)
+        public async Task SwitchClashProxy(string selector, string proxy)
         {
-            string url = string.Format(API_PROXIES_NAME, Uri.EscapeUriString(originProxy));
+            string url = string.Format(API_PROXIES_NAME, Uri.EscapeUriString(selector));
 
             var obj = new
             {
-                name = Uri.EscapeUriString(targetProxy)
+                name = proxy
             };
 
             await PutAsync<ClashNullResponse>(url, null, obj);
