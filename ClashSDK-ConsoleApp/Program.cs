@@ -59,11 +59,17 @@ namespace ClashSDK.ConsoleApp
             Console.WriteLine("------------------Clash Change Proxy------------------");
             await clashClient.SwitchClashProxy("GLOBAL", "PROXY");
             Console.WriteLine("Done");
-            // 测试更改代理
-            Console.WriteLine("------------------Clash Reload Config------------------");
+            // 测试切换配置文件
+            Console.WriteLine("------------------Clash Reload Config File------------------");
             await clashClient.ReloadClashConfig(false, "C:\\Users\\Coel Wu\\.config\\clash\\profiles\\1614360331723.yml");
             Console.WriteLine("Done");
             */
+            // 测试切换配置
+            Console.WriteLine("------------------Clash Change Config------------------");
+            var dict = new Dictionary<string, dynamic>();
+            dict.Add("allow-lan", true);
+            await clashClient.ChangeClashConfigs(dict);
+            Console.WriteLine("Done");
         }
 
         public static void OnConnectionUpdated(object sender, ConnectionEvtArgs e)

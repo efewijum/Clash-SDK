@@ -34,7 +34,7 @@ namespace Clash.SDK
             return result;
         }
 
-        public async Task ChangeClashConfigs(Dictionary<string, string> dict)
+        public async Task ChangeClashConfigs(Dictionary<string, dynamic> dict)
         {
             _ = await PatchAsync<ClashNullResponse>(API_CONFIGS, dict);
         }
