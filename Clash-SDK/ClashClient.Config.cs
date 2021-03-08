@@ -41,7 +41,7 @@ namespace Clash.SDK
 
         public async Task ReloadClashConfig(bool force = false, string path = "")
         {
-            var dict = new Dictionary<string, string>();
+            var dict = new Dictionary<string, dynamic>();
             dict.Add("force", Convert.ToString(force));
 
             var obj = new

@@ -7,6 +7,18 @@ namespace Clash.SDK.Extensions
 {
     public static class ProxyTypeExtension
     {
+        public static bool IsUnUsedProxy(this ProxyType Type)
+        {
+            switch (Type)
+            {
+                case ProxyType.Direct:
+                case ProxyType.Reject:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         public static bool IsPolicyGroup(this ProxyType Type)
         {
             switch (Type)

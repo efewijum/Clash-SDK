@@ -39,8 +39,8 @@ namespace Clash.SDK
         {
             string url = string.Format(API_PROXIES_DELAY, Uri.EscapeUriString(name));
 
-            var dict = new Dictionary<string, string>();
-            dict.Add("timeout", Convert.ToString(timeout));
+            var dict = new Dictionary<string, dynamic>();
+            dict.Add("timeout", timeout);
             dict.Add("url", testUrl);
 
             var result = await GetAsync<ClashDelayResponse>(url, dict);

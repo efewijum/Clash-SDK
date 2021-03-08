@@ -77,12 +77,12 @@ namespace Clash.SDK
         /// <param name="url">请求地址</param>
         /// <param name="parameters">请求参数</param>
         /// <returns></returns>
-        internal async Task<T> GetAsync<T>(string url, Dictionary<string, string> parameters = null)
+        internal async Task<T> GetAsync<T>(string url, Dictionary<string, dynamic> parameters = null)
         {
             string query = "";
             if (parameters != null && parameters.Count > 0)
             {
-                query = "?" + string.Join("&", parameters.Select(p => p.Key + "=" + Uri.EscapeUriString(p.Value)));
+                query = "?" + string.Join("&", parameters.Select(p => p.Key + "=" + Uri.EscapeDataString(p.Value)));
                 url += query;
             }
             var response = await _httpClient.GetAsync(url);
@@ -127,12 +127,12 @@ namespace Clash.SDK
         /// <param name="parameters">请求参数</param>
         /// <param name="putData">需要PUT提交的数据</param>
         /// <returns></returns>
-        internal async Task<T> PutAsync<T>(string url, Dictionary<string, string> parameters = null, object putData = null)
+        internal async Task<T> PutAsync<T>(string url, Dictionary<string, dynamic> parameters = null, object putData = null)
         {
             string query = "";
             if (parameters != null && parameters.Count > 0)
             {
-                query = "?" + string.Join("&", parameters.Select(p => p.Key + "=" + Uri.EscapeUriString(p.Value)));
+                query = "?" + string.Join("&", parameters.Select(p => p.Key + "=" + Uri.EscapeDataString(p.Value)));
                 url += query;
             }
             string json = JsonConvert.SerializeObject(putData);
