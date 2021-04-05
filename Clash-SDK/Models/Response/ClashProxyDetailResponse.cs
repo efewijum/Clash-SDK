@@ -1,4 +1,5 @@
 ﻿using Clash.SDK.Models.Enums;
+using Clash.SDK.Models.Share;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,12 @@ namespace Clash.SDK.Models.Response
 {
     public class ClashProxyDetailResponse
     {
+        /// <summary>
+        /// 历史延迟
+        /// </summary>
+        [JsonProperty("history")]
+        public List<ClashDelayData> History { get; set; }
+
         /// <summary>
         /// 规则中的所有代理
         /// </summary>

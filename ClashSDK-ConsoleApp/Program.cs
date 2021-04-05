@@ -10,7 +10,7 @@ namespace ClashSDK.ConsoleApp
 {
     class Program
     {
-        static ClashClient clashClient = new ClashClient(13090);
+        static ClashClient clashClient = new ClashClient(59760);
 
         static void Main(string[] args)
         {
@@ -65,11 +65,11 @@ namespace ClashSDK.ConsoleApp
             dict.Add("allow-lan", true);
             await clashClient.ChangeClashConfigs(dict);
             Console.WriteLine("Done");
-            */
             // 测试切换配置文件
             Console.WriteLine("------------------Clash Reload Config File------------------");
             await clashClient.ReloadClashConfig(false, "C:\\Users\\Coel Wu\\.config\\clash\\profiles\\ClashR_1615201944.yaml");
             Console.WriteLine("Done");
+            */
         }
 
         public static void OnConnectionUpdated(object sender, ConnectionEvtArgs e)

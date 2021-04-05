@@ -4,9 +4,11 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebSocketSharp;
+using Websocket.Client;
 
 namespace Clash.SDK
 {
@@ -16,38 +18,59 @@ namespace Clash.SDK
         public event LoggingEvt LoggingReceivedEvt;
         public event ConnectionEvt ConnectionUpdatedEvt;
 
-        private WebSocket TrafficWebSocketClient;
-        private WebSocket LoggingWebSocketClient;
-        private WebSocket ConnectionWebSocketClient;
+        private WebsocketClient TrafficWebSocketClient;
+        private WebsocketClient LoggingWebSocketClient;
+        private WebsocketClient ConnectionWebSocketClient;
         
         public void GetClashTraffic()
         {
             CloseClashTraffic();
 
-            var socket = new WebSocket(API_TRAFFIC + $"?token={_secret}");
-            socket.ConnectAsync();
+            var socket = new WebsocketClient(new Uri(API_TRAFFIC + $"?token={_secret}"));
+            socket.Start();
             TrafficWebSocketClient = socket;
-            TrafficWebSocketClient.OnMessage += TrafficDataReceived;
+            TrafficWebSocketClient.MessageReceived.Subscribe(msg =>
+            {
+                if (TrafficReceivedEvt != null)
+                {
+                    var response = JsonConvert.DeserializeObject<ClashTrafficResponse>(msg.Text);
+                    TrafficReceivedEvt.Invoke(null, new TrafficEvtArgs { Response = response });
+                }
+            });
         }
         
         public void GetClashLog()
         {
             CloseClashLog();
 
-            var socket = new WebSocket(API_LOGS + $"?token={_secret}");
-            socket.ConnectAsync();
+            var socket = new WebsocketClient(new Uri(API_LOGS + $"?token={_secret}"));
+            socket.Start();
             LoggingWebSocketClient = socket;
-            LoggingWebSocketClient.OnMessage += LoggingDataReceived;
+            LoggingWebSocketClient.MessageReceived.Subscribe(msg =>
+            {
+                if (LoggingReceivedEvt != null)
+                {
+                    var response = JsonConvert.DeserializeObject<ClashLogResponse>(msg.Text);
+                    LoggingReceivedEvt.Invoke(null, new LoggingEvtArgs { Response = response });
+                }
+            });
         }
 
         public void GetClashConnection()
         {
             CloseClashConnection();
 
-            var socket = new WebSocket(API_CONNECTIONS_WS + $"?token={_secret}");
-            socket.ConnectAsync();
+            var socket = new WebsocketClient(new Uri(API_CONNECTIONS_WS + $"?token={_secret}"));
+            socket.Start();
             ConnectionWebSocketClient = socket;
-            ConnectionWebSocketClient.OnMessage += ConnectionDataUpdated;
+            ConnectionWebSocketClient.MessageReceived.Subscribe(msg =>
+            {
+                if (ConnectionUpdatedEvt != null)
+                {
+                    var response = JsonConvert.DeserializeObject<ClashConnectionResponse>(msg.Text);
+                    ConnectionUpdatedEvt.Invoke(null, new ConnectionEvtArgs { Response = response });
+                }
+            });
         }
 
         public void CloseClashTraffic()
@@ -56,7 +79,7 @@ namespace Clash.SDK
             {
                 try
                 {
-                    TrafficWebSocketClient.Close();
+                    TrafficWebSocketClient.Stop(WebSocketCloseStatus.Empty, string.Empty);
                     TrafficWebSocketClient = null;
                 }
                 catch
@@ -71,7 +94,7 @@ namespace Clash.SDK
             {
                 try
                 {
-                    LoggingWebSocketClient.Close();
+                    LoggingWebSocketClient.Stop(WebSocketCloseStatus.Empty, string.Empty);
                     LoggingWebSocketClient = null;
                 }
                 catch
@@ -86,42 +109,12 @@ namespace Clash.SDK
             {
                 try
                 {
-                    ConnectionWebSocketClient.Close();
+                    ConnectionWebSocketClient.Stop(WebSocketCloseStatus.Empty, string.Empty);
                     ConnectionWebSocketClient = null;
                 }
                 catch
                 {
                 }
-            }
-        }
-
-        private void TrafficDataReceived(object sender, MessageEventArgs args)
-        {
-            if (TrafficReceivedEvt != null)
-            {
-                string rawMsg = args.Data;
-                var response = JsonConvert.DeserializeObject<ClashTrafficResponse>(rawMsg);
-                TrafficReceivedEvt.Invoke(null, new TrafficEvtArgs { Response = response });
-            }
-        }
-
-        private void LoggingDataReceived(object sender, MessageEventArgs args)
-        {
-            if (LoggingReceivedEvt != null)
-            {
-                string rawMsg = args.Data;
-                var response = JsonConvert.DeserializeObject<ClashLogResponse>(rawMsg);
-                LoggingReceivedEvt.Invoke(null, new LoggingEvtArgs { Response = response });
-            }
-        }
-
-        private void ConnectionDataUpdated(object sender, MessageEventArgs args)
-        {
-            if (ConnectionUpdatedEvt != null)
-            {
-                string rawMsg = args.Data;
-                var response = JsonConvert.DeserializeObject<ClashConnectionResponse>(rawMsg);
-                ConnectionUpdatedEvt.Invoke(null, new ConnectionEvtArgs { Response = response });
             }
         }
     }

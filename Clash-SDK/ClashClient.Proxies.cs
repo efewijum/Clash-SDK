@@ -30,17 +30,17 @@ namespace Clash.SDK
 
         public async Task<ClashProxyDetailResponse> GetClashProxyDetail(string name)
         {
-            string url = string.Format(API_PROXIES_NAME, Uri.EscapeUriString(name));
+            string url = string.Format(API_PROXIES_NAME, Uri.EscapeDataString(name));
             var result = await GetAsync<ClashProxyDetailResponse>(url);
             return result;
         }
 
         public async Task<ClashDelayResponse> GetClashProxyDelay(string name, int timeout = 3000, string testUrl = "http://www.gstatic.com/generate_204")
         {
-            string url = string.Format(API_PROXIES_DELAY, Uri.EscapeUriString(name));
+            string url = string.Format(API_PROXIES_DELAY, Uri.EscapeDataString(name));
 
             var dict = new Dictionary<string, dynamic>();
-            dict.Add("timeout", timeout);
+            dict.Add("timeout", Convert.ToString(timeout));
             dict.Add("url", testUrl);
 
             var result = await GetAsync<ClashDelayResponse>(url, dict);
@@ -50,7 +50,7 @@ namespace Clash.SDK
 
         public async Task SwitchClashProxy(string selector, string proxy)
         {
-            string url = string.Format(API_PROXIES_NAME, Uri.EscapeUriString(selector));
+            string url = string.Format(API_PROXIES_NAME, Uri.EscapeDataString(selector));
 
             var obj = new
             {
@@ -62,7 +62,7 @@ namespace Clash.SDK
 
         public async Task DisconnectConnection(string uuid)
         {
-            string url = string.Format(API_CONNECTIONS_UUID, Uri.EscapeUriString(uuid));
+            string url = string.Format(API_CONNECTIONS_UUID, Uri.EscapeDataString(uuid));
 
             _ = await DeleteAsync<ClashNullResponse>(url);
         }
