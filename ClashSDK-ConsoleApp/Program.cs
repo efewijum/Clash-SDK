@@ -10,7 +10,7 @@ namespace ClashSDK.ConsoleApp
 {
     class Program
     {
-        static ClashClient clashClient = new ClashClient(59760);
+        static ClashClient clashClient = new ClashClient(59592);
 
         static void Main(string[] args)
         {
@@ -21,7 +21,7 @@ namespace ClashSDK.ConsoleApp
 
         public static async Task TestClashSDK()
         {
-            /*
+
             // 打印版本
             Console.WriteLine("------------------Clash Version------------------");
             var version = await clashClient.GetClashVersion();
@@ -51,7 +51,7 @@ namespace ClashSDK.ConsoleApp
             Console.WriteLine(result.Delay);
             // 测试更改配置
             Console.WriteLine("------------------Clash Config------------------");
-            var dict = new Dictionary<string, string>();
+            var dict = new Dictionary<string, dynamic>();
             dict.Add("mode", "direct");
             await clashClient.ChangeClashConfigs(dict);
             Console.WriteLine("Done");
@@ -61,7 +61,7 @@ namespace ClashSDK.ConsoleApp
             Console.WriteLine("Done");
             // 测试切换配置
             Console.WriteLine("------------------Clash Change Config------------------");
-            var dict = new Dictionary<string, dynamic>();
+            dict = new Dictionary<string, dynamic>();
             dict.Add("allow-lan", true);
             await clashClient.ChangeClashConfigs(dict);
             Console.WriteLine("Done");
@@ -69,7 +69,6 @@ namespace ClashSDK.ConsoleApp
             Console.WriteLine("------------------Clash Reload Config File------------------");
             await clashClient.ReloadClashConfig(false, "C:\\Users\\Coel Wu\\.config\\clash\\profiles\\ClashR_1615201944.yaml");
             Console.WriteLine("Done");
-            */
         }
 
         public static void OnConnectionUpdated(object sender, ConnectionEvtArgs e)

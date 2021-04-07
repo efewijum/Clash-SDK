@@ -48,7 +48,7 @@ namespace Clash.SDK
             return result;
         }
 
-        public async Task SwitchClashProxy(string selector, string proxy)
+        public async Task<ClashNullableResponse> SwitchClashProxy(string selector, string proxy)
         {
             string url = string.Format(API_PROXIES_NAME, Uri.EscapeDataString(selector));
 
@@ -57,19 +57,22 @@ namespace Clash.SDK
                 name = proxy
             };
 
-            await PutAsync<ClashNullResponse>(url, null, obj);
+            var result = await PutAsync<ClashNullableResponse>(url, null, obj);
+            return result;
         }
 
-        public async Task DisconnectConnection(string uuid)
+        public async Task<ClashNullableResponse> DisconnectConnection(string uuid)
         {
             string url = string.Format(API_CONNECTIONS_UUID, Uri.EscapeDataString(uuid));
 
-            _ = await DeleteAsync<ClashNullResponse>(url);
+            var result = await DeleteAsync<ClashNullableResponse>(url);
+            return result;
         }
 
-        public async Task DisconnectAllConnections()
+        public async Task<ClashNullableResponse> DisconnectAllConnections()
         {
-            _ = await DeleteAsync<ClashNullResponse>(API_CONNECTIONS);
+            var result = await DeleteAsync<ClashNullableResponse>(API_CONNECTIONS);
+            return result;
         }
     }
 }

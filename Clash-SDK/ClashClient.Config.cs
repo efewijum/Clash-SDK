@@ -34,12 +34,13 @@ namespace Clash.SDK
             return result;
         }
 
-        public async Task ChangeClashConfigs(Dictionary<string, dynamic> dict)
+        public async Task<ClashNullableResponse> ChangeClashConfigs(Dictionary<string, dynamic> dict)
         {
-            _ = await PatchAsync<ClashNullResponse>(API_CONFIGS, dict);
+            var result = await PatchAsync<ClashNullableResponse>(API_CONFIGS, dict);
+            return result;
         }
 
-        public async Task ReloadClashConfig(bool force = false, string path = "")
+        public async Task<ClashNullableResponse> ReloadClashConfig(bool force = false, string path = "")
         {
             var dict = new Dictionary<string, dynamic>();
             dict.Add("force", Convert.ToString(force));
@@ -49,7 +50,8 @@ namespace Clash.SDK
                 path = path,
             };
 
-            _ = await PutAsync<ClashNullResponse>(API_CONFIGS, dict, string.IsNullOrWhiteSpace(path) ? null : obj);
+            var result = await PutAsync<ClashNullableResponse>(API_CONFIGS, dict, string.IsNullOrWhiteSpace(path) ? null : obj);
+            return result;
         }
 
         public async Task<ClashRulesResponse> GetClashRules()

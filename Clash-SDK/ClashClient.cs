@@ -86,7 +86,6 @@ namespace Clash.SDK
                 url += query;
             }
             var response = await _httpClient.GetAsync(url);
-            response.EnsureSuccessStatusCode();
             string result = await response.Content.ReadAsStringAsync();
             if (typeof(T) == typeof(String))
             {
@@ -138,7 +137,6 @@ namespace Clash.SDK
             string json = JsonConvert.SerializeObject(putData);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _httpClient.PutAsync(url, httpContent);
-            response.EnsureSuccessStatusCode();
             string result = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(result);
         }
@@ -152,7 +150,6 @@ namespace Clash.SDK
         internal async Task<T> DeleteAsync<T>(string url)
         {
             var response = await _httpClient.DeleteAsync(url);
-            response.EnsureSuccessStatusCode();
             string result = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(result);
         }
