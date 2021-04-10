@@ -67,7 +67,7 @@ namespace ClashSDK.ConsoleApp
             Console.WriteLine("Done");
             // 测试切换配置文件
             Console.WriteLine("------------------Clash Reload Config File------------------");
-            await clashClient.ReloadClashConfig(false, "C:\\Users\\Coel Wu\\.config\\clash\\profiles\\ClashR_1615201944.yaml");
+            var a = await clashClient.ReloadClashConfig(false, "C:\\Users\\Coel Wu\\.config\\clash\\config.yaml");
             Console.WriteLine("Done");
         }
 
