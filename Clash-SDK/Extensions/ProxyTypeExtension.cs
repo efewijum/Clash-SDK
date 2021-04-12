@@ -32,5 +32,16 @@ namespace Clash.SDK.Extensions
                     return false;
             }
         }
+
+        public static bool IsPolicyGroupSelectable(this ProxyType Type)
+        {
+            switch (Type)
+            {
+                case ProxyType.Selector:
+                    return true;
+                default:
+                    return false;
+            }
+        }
     }
 }
