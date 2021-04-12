@@ -24,7 +24,7 @@ namespace Clash.SDK
             _baseUrl = "http://127.0.0.1:8080";
             _baseWsUrl = "ws://127.0.0.1:8080";
             _httpClient = new HttpClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(3);
+            _httpClient.Timeout = TimeSpan.FromSeconds(6);
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Clash.SDK
             _baseUrl = $"http://127.0.0.1:{port}";
             _baseWsUrl = $"ws://127.0.0.1:{port}";
             _httpClient = new HttpClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(3);
+            _httpClient.Timeout = TimeSpan.FromSeconds(6);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Clash.SDK
             _baseUrl = http;
             _baseWsUrl = ws;
             _httpClient = new HttpClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(3);
+            _httpClient.Timeout = TimeSpan.FromSeconds(6);
         }
 
         /// <summary>

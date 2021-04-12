@@ -35,7 +35,7 @@ namespace Clash.SDK
             return result;
         }
 
-        public async Task<ClashDelayResponse> GetClashProxyDelay(string name, int timeout = 3000, string testUrl = "http://www.gstatic.com/generate_204")
+        public async Task<ClashDelayResponse> GetClashProxyDelay(string name, int timeout = 5000, string testUrl = "http://www.gstatic.com/generate_204")
         {
             string url = string.Format(API_PROXIES_DELAY, Uri.EscapeDataString(name));
 
