@@ -10,6 +10,9 @@ namespace Clash.SDK.Models.Enums
         [EnumMember(Value = "Selector")]
         Selector,
 
+        [EnumMember(Value = "Relay")]
+        Relay,
+
         [EnumMember(Value = "URLTest")]
         URLTest,
 

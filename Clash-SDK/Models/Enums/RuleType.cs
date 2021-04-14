@@ -31,6 +31,12 @@ namespace Clash.SDK.Models.Enums
         [EnumMember(Value = "SrcPort")]
         SrcPort,
 
+        [EnumMember(Value = "Process")]
+        Process,
+
+        [EnumMember(Value = "RuleSet")]
+        RuleSet,
+
         [EnumMember(Value = "Match")]
         Match
     }
