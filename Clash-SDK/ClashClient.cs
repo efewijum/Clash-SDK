@@ -27,7 +27,11 @@ namespace Clash.SDK
             _httpClientHandler = new HttpClientHandler
             {
                 UseProxy = false,
+#if NET5_0_OR_GREATER && NETCOREAPP3_1_OR_GREATER
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli
+#else
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+#endif
             };
             _httpClient = new HttpClient(_httpClientHandler);
             _httpClient.Timeout = TimeSpan.FromSeconds(6);
@@ -44,7 +48,11 @@ namespace Clash.SDK
             _httpClientHandler = new HttpClientHandler
             {
                 UseProxy = false,
+#if NET5_0_OR_GREATER && NETCOREAPP3_1_OR_GREATER
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli
+#else
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+#endif
             };
             _httpClient = new HttpClient(_httpClientHandler);
             _httpClient.Timeout = TimeSpan.FromSeconds(6);

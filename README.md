@@ -6,9 +6,13 @@
 
 # Clash .NET SDK
 
-[![Nuget](https://img.shields.io/nuget/v/CoelWu.Clash.SDK)](https://www.nuget.org/packages/CoelWu.Clash.SDK/)
+[![Nuget](https://img.shields.io/nuget/v/CoelWu.Clash.SDK?color=green&style=flat-square)](https://www.nuget.org/packages/CoelWu.Clash.SDK/)
+![RunTime](https://img.shields.io/static/v1?label=runtime&message=.NET%205&color=cyan&style=flat-square)
+![RunTime](https://img.shields.io/static/v1?label=runtime&message=.NET%20Core%203.1&color=blue&style=flat-square)
+![RunTime](https://img.shields.io/static/v1?label=runtime&message=.NET%20Standard%202.0&color=yellow&style=flat-square)
+![RunTime](https://img.shields.io/static/v1?label=runtime&message=.NET%20Standard%202.1&color=pink&style=flat-square)
 
-该SDK基于[Clash API](https://clash.gitbook.io/doc/restful-api)实现，在.NET Standard 2.0上构建
+该SDK基于[Clash API](https://clash.gitbook.io/doc/restful-api)实现
 
 </div>
 
@@ -42,4 +46,4 @@ _client.Dispose();
 ## 鸣谢
 
 - [Clash API](https://clash.gitbook.io/doc/restful-api)
-- [ClashX](https://github.com/yichengchen/clashX)
+- [Clash X](https://github.com/yichengchen/clashX)
