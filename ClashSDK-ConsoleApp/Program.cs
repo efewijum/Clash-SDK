@@ -1,6 +1,4 @@
 ﻿using Clash.SDK;
-using Clash.SDK.Extensions;
-using Clash.SDK.Models.Enums;
 using Clash.SDK.Models.Events;
 using System;
 using System.Collections.Generic;
@@ -10,7 +8,7 @@ namespace ClashSDK.ConsoleApp
 {
     class Program
     {
-        static ClashClient clashClient = new ClashClient(56809);
+        static ClashClient clashClient = new ClashClient(57339);
 
         static void Main(string[] args)
         {
@@ -26,6 +24,20 @@ namespace ClashSDK.ConsoleApp
             Console.WriteLine("------------------Clash Version------------------");
             var version = await clashClient.GetClashVersion();
             Console.WriteLine(version.Version);
+            // 打印Providers代理
+            Console.WriteLine("------------------Clash Providers Proxies------------------");
+            var providers = await clashClient.GetClashProvidersProxies();
+            foreach (var provider in providers.Providers)
+            {
+                Console.WriteLine($"Name: {provider.Name} Type: {provider.Type} Vehicle Type: {provider.VehicleType}");
+            }
+            // 打印代理
+            Console.WriteLine("------------------Clash Proxies------------------");
+            var proxies = await clashClient.GetClashProxies();
+            foreach (var proxy in proxies.Proxies)
+            {
+                Console.WriteLine($"Name: {proxy.Name} Type: {proxy.Type}");
+            }
             // 打印规则
             Console.WriteLine("------------------Clash Rules------------------");
             var rules = await clashClient.GetClashRules();
@@ -33,18 +45,12 @@ namespace ClashSDK.ConsoleApp
             {
                 Console.WriteLine($"Type: {rule.Type} Payload: {rule.PayLoad} Proxy: {rule.Proxy}");
             }
-            // 打印代理
-            Console.WriteLine("------------------Clash Proxies------------------");
-            var proxies = await clashClient.GetClashProxies();
-            foreach (var proxy in proxies.Proxies)
-            {
-                Console.WriteLine($"Name: {proxy.Name} Type {proxy.Type.ToString()}");
-            }
             // 测试WebSocket
             Console.WriteLine("------------------Clash WebSocket------------------");
             clashClient.GetClashConnection();
             clashClient.ConnectionUpdatedEvt += OnConnectionUpdated;
-            //clashClient.ConnectionUpdatedEvt -= OnConnectionUpdated;
+            clashClient.ConnectionUpdatedEvt -= OnConnectionUpdated;
+            Console.WriteLine("Done");
             // 测试延迟
             Console.WriteLine("------------------Clash Latency------------------");
             var result = await clashClient.GetClashProxyDelay("DIRECT");

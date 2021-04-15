@@ -15,6 +15,7 @@ namespace Clash.SDK
         private static string _baseWsUrl = string.Empty;
         private static string _secret = string.Empty;
         internal HttpClient _httpClient;
+        internal HttpClientHandler _httpClientHandler;
 
         /// <summary>
         /// 初始化ClashClient实例
@@ -23,7 +24,12 @@ namespace Clash.SDK
         {
             _baseUrl = "http://127.0.0.1:8080";
             _baseWsUrl = "ws://127.0.0.1:8080";
-            _httpClient = new HttpClient();
+            _httpClientHandler = new HttpClientHandler
+            {
+                UseProxy = false,
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+            };
+            _httpClient = new HttpClient(_httpClientHandler);
             _httpClient.Timeout = TimeSpan.FromSeconds(6);
         }
 
@@ -35,7 +41,12 @@ namespace Clash.SDK
         {
             _baseUrl = $"http://127.0.0.1:{port}";
             _baseWsUrl = $"ws://127.0.0.1:{port}";
-            _httpClient = new HttpClient();
+            _httpClientHandler = new HttpClientHandler
+            {
+                UseProxy = false,
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+            };
+            _httpClient = new HttpClient(_httpClientHandler);
             _httpClient.Timeout = TimeSpan.FromSeconds(6);
         }
 

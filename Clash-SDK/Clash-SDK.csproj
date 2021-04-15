@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <RootNamespace>Clash.SDK</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -10,12 +10,12 @@
     <Product>Clash.SDK</Product>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <Description>Clash Proxy Controller via C#</Description>
-    <PackageTags>clash, proxy, sdk, restful, api</PackageTags>
+    <PackageTags>clash, proxy, sdk, restful, api, async, http, ws, websocket</PackageTags>
     <Copyright>Copyright (c) 2018-2021 Coel Wu.</Copyright>
     <PackageProjectUrl>https://github.com/CoelWu/Clash-SDK</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CoelWu/Clash-SDK</RepositoryUrl>
     <PackageIcon>Clash_icon.png</PackageIcon>
-    <Version>1.2.5</Version>
+    <Version>1.2.6</Version>
   </PropertyGroup>
 
   <ItemGroup>

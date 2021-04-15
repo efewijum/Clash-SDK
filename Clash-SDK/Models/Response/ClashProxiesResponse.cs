@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Clash.SDK.Models.Share;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,6 +10,6 @@ namespace Clash.SDK.Models.Response
         /// <summary>
         /// 所有代理
         /// </summary>
-        public List<ClashProxyDetailResponse> Proxies { get; set; }
+        public List<ClashProxyData> Proxies { get; set; }
     }
 }

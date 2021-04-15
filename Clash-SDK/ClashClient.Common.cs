@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,14 +23,26 @@ namespace Clash.SDK
         private WebsocketClient LoggingWebSocketClient;
         private WebsocketClient ConnectionWebSocketClient;
         
+        /// <summary>
+        /// 获取Token
+        /// </summary>
+        /// <returns>Token Url参数</returns>
+        private string GetToken()
+        {
+            return !string.IsNullOrWhiteSpace(_secret) ? $"?token={_secret}" : string.Empty;
+        }
+
+        /// <summary>
+        /// 获取Clash流量WebSocket
+        /// </summary>
         public void GetClashTraffic()
         {
             CloseClashTraffic();
 
-            var socket = new WebsocketClient(new Uri(API_TRAFFIC + $"?token={_secret}"));
+            var socket = new WebsocketClient(new Uri(API_TRAFFIC + GetToken()));
             socket.Start();
             TrafficWebSocketClient = socket;
-            TrafficWebSocketClient.MessageReceived.Subscribe(msg =>
+            TrafficWebSocketClient.MessageReceived.ObserveOn(TaskPoolScheduler.Default).Subscribe(msg =>
             {
                 if (TrafficReceivedEvt != null)
                 {
@@ -39,14 +52,17 @@ namespace Clash.SDK
             });
         }
         
+        /// <summary>
+        /// 获取Clash日志WebSocket
+        /// </summary>
         public void GetClashLog()
         {
             CloseClashLog();
 
-            var socket = new WebsocketClient(new Uri(API_LOGS + $"?token={_secret}"));
+            var socket = new WebsocketClient(new Uri(API_LOGS + GetToken()));
             socket.Start();
             LoggingWebSocketClient = socket;
-            LoggingWebSocketClient.MessageReceived.Subscribe(msg =>
+            LoggingWebSocketClient.MessageReceived.ObserveOn(TaskPoolScheduler.Default).Subscribe(msg =>
             {
                 if (LoggingReceivedEvt != null)
                 {
@@ -56,14 +72,17 @@ namespace Clash.SDK
             });
         }
 
+        /// <summary>
+        /// 获取Clash连接WebSocket
+        /// </summary>
         public void GetClashConnection()
         {
             CloseClashConnection();
 
-            var socket = new WebsocketClient(new Uri(API_CONNECTIONS_WS + $"?token={_secret}"));
+            var socket = new WebsocketClient(new Uri(API_CONNECTIONS_WS + GetToken()));
             socket.Start();
             ConnectionWebSocketClient = socket;
-            ConnectionWebSocketClient.MessageReceived.Subscribe(msg =>
+            ConnectionWebSocketClient.MessageReceived.ObserveOn(TaskPoolScheduler.Default).Subscribe(msg =>
             {
                 if (ConnectionUpdatedEvt != null)
                 {
@@ -73,6 +92,9 @@ namespace Clash.SDK
             });
         }
 
+        /// <summary>
+        /// 关闭Clash流量WebSocket
+        /// </summary>
         public void CloseClashTraffic()
         {
             if (TrafficWebSocketClient != null)
@@ -88,6 +110,9 @@ namespace Clash.SDK
             }
         }
 
+        /// <summary>
+        /// 关闭Clash日志WebSocket
+        /// </summary>
         public void CloseClashLog()
         {
             if (LoggingWebSocketClient != null)
@@ -103,6 +128,9 @@ namespace Clash.SDK
             }
         }
 
+        /// <summary>
+        /// 关闭Clash连接WebSocket
+        /// </summary>
         public void CloseClashConnection()
         {
             if (ConnectionWebSocketClient != null)

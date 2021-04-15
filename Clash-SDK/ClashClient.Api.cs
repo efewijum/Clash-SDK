@@ -25,10 +25,35 @@ namespace Clash.SDK
         {
             get => _baseUrl;
         }
-        
+
         private string API_VERSION
         {
             get => _baseUrl + "/version";
+        }
+
+        private string API_PROVIDERS_PROXIES
+        {
+            get => _baseUrl + "/providers/proxies";
+        }
+
+        private string API_PROVIDERS_PROXIES_NAME
+        {
+            get => _baseUrl + "/providers/proxies" + "/{0}";
+        }
+
+        private string API_PROVIDERS_PROXIES_HEALTHCHECK
+        {
+            get => _baseUrl + "/providers/proxies" + "/{0}" + "/healthcheck";
+        }
+
+        private string API_PROVIDERS_RULES
+        {
+            get => _baseUrl + "/rules";
+        }
+
+        private string API_PROVIDERS_RULES_NAME
+        {
+            get => _baseUrl + "/rules" + "/{0}";
         }
 
         private string API_PROXIES
