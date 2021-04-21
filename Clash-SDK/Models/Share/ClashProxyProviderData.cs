@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Clash.SDK.Models.Share
 {
-    public class ClashProvidersProxyData
+    public class ClashProxyProviderData
     {
         /// <summary>
         /// Provider名称
@@ -25,6 +25,12 @@ namespace Clash.SDK.Models.Share
         /// </summary>
         [JsonProperty("type")]
         public ProviderType Type { get; set; }
+
+        /// <summary>
+        /// Provider更新时间
+        /// </summary>
+        [JsonProperty("updatedAt")]
+        public DateTime? UpdatedAt { get; set; }
 
         /// <summary>
         /// Provider承载类型

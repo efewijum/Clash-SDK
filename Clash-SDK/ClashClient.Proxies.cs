@@ -14,17 +14,17 @@ namespace Clash.SDK
 {
     public sealed partial class ClashClient
     {
-        public async Task<ClashProvidersProxiesResponse> GetClashProvidersProxies()
+        public async Task<ClashProvidersProxiesResponse> GetClashProxyProviders()
         {
             ClashProvidersProxiesResponse result = new ClashProvidersProxiesResponse
             {
-                Providers = new List<ClashProvidersProxyData>()
+                Providers = new List<ClashProxyProviderData>()
             };
             string data = await GetAsync<string>(API_PROVIDERS_PROXIES);
             var obj = JObject.Parse(data);
             foreach (JProperty provider in obj["providers"])
             {
-                result.Providers.Add(provider.Value.ToObject<ClashProvidersProxyData>());
+                result.Providers.Add(provider.Value.ToObject<ClashProxyProviderData>());
             }
             return result;
         }

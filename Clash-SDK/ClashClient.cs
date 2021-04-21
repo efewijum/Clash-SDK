@@ -67,7 +67,15 @@ namespace Clash.SDK
         {
             _baseUrl = http;
             _baseWsUrl = ws;
-            _httpClient = new HttpClient();
+            _httpClientHandler = new HttpClientHandler
+            {
+#if NET5_0_OR_GREATER && NETCOREAPP3_1_OR_GREATER
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli
+#else
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+#endif
+            };
+            _httpClient = new HttpClient(_httpClientHandler);
             _httpClient.Timeout = TimeSpan.FromSeconds(6);
         }
 
@@ -179,6 +187,7 @@ namespace Clash.SDK
         public void Dispose()
         {
             _httpClient.Dispose();
+            _httpClientHandler.Dispose();
             GC.SuppressFinalize(this);
         }
     }
