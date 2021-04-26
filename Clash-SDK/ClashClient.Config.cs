@@ -68,7 +68,7 @@ namespace Clash.SDK
             {
                 Providers = new List<ClashRuleProviderData>()
             };
-            string data = await GetAsync<string>(API_PROXY_PROVIDERS);
+            string data = await GetAsync<string>(API_RULE_PROVIDERS);
             var obj = JObject.Parse(data);
             foreach (JProperty provider in obj["providers"])
             {
