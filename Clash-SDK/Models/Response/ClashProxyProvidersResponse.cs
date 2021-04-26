@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Clash.SDK.Models.Response
 {
-    public class ClashProvidersProxiesResponse
+    public class ClashProxyProvidersResponse
     {
         /// <summary>
         /// 所有Providers代理

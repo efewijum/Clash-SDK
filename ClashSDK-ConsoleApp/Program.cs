@@ -8,7 +8,7 @@ namespace ClashSDK.ConsoleApp
 {
     class Program
     {
-        static ClashClient clashClient = new ClashClient(54436);
+        static ClashClient clashClient = new ClashClient(51034);
 
         static void Main(string[] args)
         {
