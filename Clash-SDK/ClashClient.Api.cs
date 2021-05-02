@@ -48,12 +48,12 @@ namespace Clash.SDK
 
         private string API_RULE_PROVIDERS
         {
-            get => _baseUrl + "/rules";
+            get => _baseUrl + "/providers/rules";
         }
 
         private string API_RULE_PROVIDER_NAME
         {
-            get => _baseUrl + "/rules" + "/{0}";
+            get => _baseUrl + "/providers/rules" + "/{0}";
         }
 
         private string API_PROXIES
